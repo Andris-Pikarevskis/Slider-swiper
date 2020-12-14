@@ -28,7 +28,6 @@ h6 {
 }
 html,
 body {
-	height: 100%;
 	line-height: 1;
 	font-size: 14px;
 	background-color: rgb(90, 81, 81);
@@ -52,44 +51,21 @@ body {
 .image-slider__wrapper{
 
 }
-.image-slider__slide{
 
+ .image-slider__slide{
+ 
 }
 .image-slider__image{
-    text-align: center;
-}
-.image-slider__image img{
-    max-width: 100%;
+	text-align: center;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+a.area-map-link:hover {
+	background-color: #808080;
+	border: 1px solid #000000;
+	opacity: 0.5;
+	cursor: pointer;
+}
 
 
 

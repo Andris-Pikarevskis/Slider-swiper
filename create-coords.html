@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+ 
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+  
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+  
+    .coords {
+        background-color: #f1f1f1;
+        padding: 20px;
+        text-align: center;
+    }
+
+    a.area-map-link:hover {
+        background-color: #808080;
+        border:3px solid #000000;
+        opacity: 0.5;
+        cursor: pointer;
+    }
+
+</style>
+</head>
+<body>
+
+        <div class="coords">
+            <select name="selectImage">
+                <option value="">Izvēlies bildi</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+            <div>
+                <button name="crop" class="crop">Iezīmēt</button>
+            </div>
+
+            <label for="x1">x1</label><input type="text" size="4" class="x1" name="x1" disabled />
+            <label for="y1">Y1</label><input type="text" size="4" class="y1" name="y1" disabled />
+            <label for="x2">X2</label><input type="text" size="4" class="x2" name="x2" disabled />
+            <label for="y2">Y2</label><input type="text" size="4" class="y2" name="y2" disabled />
+            <label for="w">W</label><input type="text" size="4" class="w" name="w" disabled />
+            <label for="h">H</label><input type="text" size="4" class="h" name="h" disabled />
+
+            <div>
+                <input type="text" name="prodUrl" placeholder="product url" required>
+                <button type="submit"name="submit_coords">Saglabāt</button>
+            </div>
+        </div>
+
+    <div class="row">
+
+        <div class="image-map-container">
+            <div class="image"></div>
+            <div class="map-selector">
+            </div>
+        </div>
+    </div>
+
+    <div class="append">
+    </div>
+
+
+
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/jquery.Jcrop.min.js"></script>
+
+<script>
+   
+    $('select[name="selectImage"]').change(function() {
+        var imgId = $(this).val();
+        var areaCounter = 1;
+        if (imgId != '') {
+            $('.image').html($('<img src="img/' + imgId + '.jpg" class="map" width="630" height="900" usemap="#img-' + imgId + '" id="img-' + imgId + '" class="map">'));
+            $('.crop').on('click', function() {
+
+
+                $('#img-' + imgId).Jcrop({
+                    onChange:   showCoords,
+                    onSelect:   showCoords,
+                    onRelease:  clearCoords
+                });
+
+                $('.coords').change('input', function(e){
+                    var x1 = $('.x1').val();
+                    var x2 = $('.x2').val();
+                    var y1 = $('.y1').val();
+                    var y2 = $('.y2').val();
+                });
+            });
+
+            function showCoords(c)
+            {
+                $('.x1').val(c.x);
+                $('.y1').val(c.y);
+                $('.x2').val(c.x2);
+                $('.y2').val(c.y2);
+                $('.w').val(c.w);
+                $('.h').val(c.h);
+            }
+
+            function clearCoords()
+            {
+                $('.coords input').val('');
+            }
+        }
+
+        $('.clearCords').click(function() {
+            clearCoords();
+        });
+
+        $('button[name="submit_coords"]').click(function() {
+            var x1 = $('.x1').val();
+            var x2 = $('.x2').val();
+            var y1 = $('.y1').val();
+            var y2 = $('.y2').val();
+            var w = $('.w').val();
+            var h = $('.h').val();
+            var prodUrl = $('input[name="prodUrl"]').val();
+            
+            console.log('<a class="area-map-link" title="' + prodUrl + '" style="position: absolute; width: ' + w + 'px; height: ' + h + 'px; left: ' + x1 + 'px; top: ' + y1 + 'px;" href="' + prodUrl + '"></a>');
+
+            clearCoords();
+
+                            
+
+            //old -----
+            //console.log('<area shape="rect" id="area-"' + areaCounter + '" coords="' + x1 + ', ' + y1 + ', ' + x2 + ', ' + y2 +'" alt="prod" href="' + prodUrl + '" target="_blank">');
+            //$('.append').append('<area shape="rect" coords="' + x1 + ', ' + y1 + ', ' + x2 + ', ' + y2 +'" alt="prod" href="' + prodUrl + '" target="_blank">');
+
+
+
+        });
+  });
+
+  </script>
+</body>
+</html>
